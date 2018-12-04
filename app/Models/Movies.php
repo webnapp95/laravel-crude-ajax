@@ -22,6 +22,15 @@ class Movies extends Model
     const IS_IN_ACTIVE = '0';
     const DESC = 'desc';
     const DEFAULT_COLUMN = 'id';
+
+    /**
+     * Get movies list by condition.
+     *
+     * @param  array $params
+     * @return array
+     * @author Chigs Patel <info@webnappdev.in>
+     * @Date   3rd Nov 2018
+     */
     public static function getMoviesList($params = []) {
         $page     = array_get($params, "page", self::PAZE);
         $pageSize = array_get($params, "page_size", self::PAZE_SIZE);
@@ -32,6 +41,15 @@ class Movies extends Model
         return $moviesData;
     }
 
+    /**
+     * Add or update movies records by id
+     *
+     * @param array  $params
+     * @param int    $id
+     * @return array
+     * @author Chigs Patel <info@webnappdev.in>
+     * @Date 3rd Nov 2018
+     */
     public static function addUpdateMovies($params = [], $id = []) {
         if (empty($params)) {
             return false;

@@ -10,18 +10,40 @@ class MoviesController extends Controller
 {
     protected $validateMsg = [];
 
+    /**
+     * Get movie list.
+     *
+     * @author Chigs Patel <info@webnappdev.in>
+     * @Date 3rd Nov 2018
+     */
     public function getList()
     {
         $moviesData = Movies::getMoviesList();
         return ['moviesData' => $moviesData];
     }
 
+    /**
+     * Get movie detail by id.
+     *
+     * @param  int   $id
+     * @return array
+     * @author Chigs Patel <info@webnappdev.in>
+     * @Date 3rd Nov 2018
+     */
     public function getDetail($id)
     {
         $moviesData = Movies::where(['deleted_at' => '', 'id' => $id])->first();
         return ['moviesData' => $moviesData];
     }
 
+    /**
+     * Create movie record.
+     *
+     * @param Request $request
+     * @return json
+     * @author Chigs Patel <info@webnappdev.in>
+     * @Date 3rd Nov 2018
+     */
     public function createMovies(Request $request)
     {
         $params = $request->all();
@@ -35,6 +57,15 @@ class MoviesController extends Controller
         return $this->responseError('Something went wrong!');
     }
 
+    /**
+     * Update movie record by id.
+     *
+     * @param Request $request
+     * @param int     $moviesId
+     * @return json
+     * @author Chigs  Patel <info@webnappdev.in>
+     * @Date 3rd Nov 2018
+     */
     public function updateMovies(Request $request, $moviesId)
     {
         if (!$moviesId) {
@@ -51,6 +82,14 @@ class MoviesController extends Controller
         return $this->responseError('Something went wrong!');
     }
 
+    /**
+     * Validate movie data.
+     *
+     * @param array $params
+     * @return bool
+     * @author Chigs Patel <info@webnappdev.in>
+     * @Date 3rd Nov 2018
+     */
     private function validateMoviesData($params = [])
     {
         $validator = Validator::make($params, [
@@ -65,7 +104,14 @@ class MoviesController extends Controller
         return true;
     }
 
-
+    /**
+     * Delete movie record by id.
+     *
+     * @param int    $id
+     * @return json
+     * @author Chigs Patel <info@webnappdev.in>
+     * @Date 3rd Nov 2018
+     */
     public function deleteMovies($id) {
         $isDeleted = Movies::where('id', $id)->update(['is_active' => Movies::IS_IN_ACTIVE, 'deleted_at' => Date('Y-m-d H:i:s')]);
         if ($isDeleted)
@@ -78,6 +124,14 @@ class MoviesController extends Controller
         return view('movieList');
     }
 
+    /**
+     * Image upload.
+     *
+     * @param Request $_FILES
+     * @return string
+     * @author Chigs Patel <info@webnappdev.in>
+     * @Date 3rd Nov 2018
+     */
     public function imageUpload()
     {
         $image = [];
@@ -106,4 +160,5 @@ class MoviesController extends Controller
             return $image;
         }
     }
+
 }

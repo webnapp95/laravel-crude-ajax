@@ -119,6 +119,14 @@ class MoviesController extends Controller
         return $this->responseError('Something went wrong!');
     }
 
+    /**
+     * Render movie list.
+     *
+     * @return void
+     * 
+     * @author Chigs Patel <info@webnappdev.in>
+     * @date   November 3 2018 9:37 PM
+     */
     public function movieList()
     {
         return view('movieList');

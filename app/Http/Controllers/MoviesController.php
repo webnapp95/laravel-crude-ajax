@@ -51,6 +51,7 @@ class MoviesController extends Controller
         if (!$isValidate) {
             return $this->responseError($this->validateMsg);
         }
+
         $isAdd = Movies::addUpdateMovies($params);
         if ($isAdd)
             return $this->responseSuccess('Add Records Successfull');
@@ -71,12 +72,15 @@ class MoviesController extends Controller
         if (!$moviesId) {
             return $this->responseError('Params Error!');
         }
+
         $params = $request->all();
         $isValidate = $this->validateMoviesData($params);
         if (!$isValidate) {
             return $this->responseError($this->validateMsg);
         }
+
         $isUpdate = Movies::addUpdateMovies($params, $moviesId);
+
         if($isUpdate)
             return $this->responseSuccess('Update Records Successfull');
         return $this->responseError('Something went wrong!');
@@ -97,10 +101,12 @@ class MoviesController extends Controller
             'year'        => 'required|int',
             'description' => 'required',
         ]);
+
         if ($validator->fails()) {
             $this->validateMsg = $validator->errors()->all();
             return false;
         }
+
         return true;
     }
 
@@ -114,6 +120,7 @@ class MoviesController extends Controller
      */
     public function deleteMovies($id) {
         $isDeleted = Movies::where('id', $id)->update(['is_active' => Movies::IS_IN_ACTIVE, 'deleted_at' => Date('Y-m-d H:i:s')]);
+
         if ($isDeleted)
         return $this->responseSuccess('Deleted Records Successfull');
         return $this->responseError('Something went wrong!');

@@ -36,12 +36,12 @@
             return $difference;
         }
 
-        public static function jsonFormate($json, $encode = false, $toAssociate = false) {
+        public static function jsonFormate($json, $decode = false, $toAssociate = false) {
             if(!$json) {
                 return $json;
             }
 
-            if ($encode) {
+            if (!$decode) {
                 return json_encode($json);
             }
             if(!is_array($json)) {

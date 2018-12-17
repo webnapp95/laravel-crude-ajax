@@ -8,7 +8,7 @@
         }
 
         public static function diffRecursive($array1, $array2) {
-            $difference = array();
+            $difference = [];
             foreach($array1 as $key => $value) {
                 if(is_array($value) && isset($array2[$key])){ // it's an array and both have the key
                     $new_diff = self::diffRecursive($value, $array2[$key]);
@@ -61,6 +61,31 @@
 
         public static function StrToArray($inputString, $separator) {
             return explode($separator, $inputString);
+        }
+
+    /**
+     * Search value by key.
+     *
+     * @params $array [0 => ["id"=>1,"name"=>"cat 1"],
+                            1 => ["id"=>2,"name"=>"cat 2"],
+                            2 => ["id"=>3,"name"=>"cat 1"]]
+     * @params $key i.e. "name"
+     * @params $value i.e. "cat 1"
+     * @author Chigs Patel <info@webnappdev.in>
+     * @Date Dec 17 2018
+     */
+        public static function search($array, $key, $value) {
+            $results = [];
+            if (is_array($array))
+            {
+                if (isset($array[$key]) && $array[$key] == $value)
+                    $results[] = $array;
+
+                foreach ($array as $subarray)
+                    $results = array_merge($results, search($subarray, $key, $value));
+            }
+
+            return $results;
         }
 
     }

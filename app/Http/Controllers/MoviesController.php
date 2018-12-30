@@ -154,7 +154,7 @@ class MoviesController extends Controller
         $image = [];
         $valid_extensions = array('jpeg', 'jpg', 'png', 'gif', 'bmp' , 'pdf' , 'doc' , 'ppt'); // valid extensions
         $basePath = url('public/uploads'); // upload directory
-        $path = "C:/xampp/htdocs/laravel-crude-ajax/public/uploads"; // upload directory
+        $path = public_path('/uploads'); // upload directory
 
         if($_FILES['image'])
         {

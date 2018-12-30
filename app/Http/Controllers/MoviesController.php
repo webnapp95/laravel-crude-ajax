@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Movies;
 use Validator;
+use App\Helpers\ArrayHelper;
+use App\Helpers\DateHelper;
 
 class MoviesController extends Controller
 {
@@ -152,7 +154,7 @@ class MoviesController extends Controller
         $image = [];
         $valid_extensions = array('jpeg', 'jpg', 'png', 'gif', 'bmp' , 'pdf' , 'doc' , 'ppt'); // valid extensions
         $basePath = url('public/uploads'); // upload directory
-        $path = "C:/xampp/htdocs/movies/public/uploads"; // upload directory
+        $path = "C:/xampp/htdocs/laravel-crude-ajax/public/uploads"; // upload directory
 
         if($_FILES['image'])
         {
@@ -174,6 +176,16 @@ class MoviesController extends Controller
 
             return $image;
         }
+    }
+
+    public function test() {
+        $array = ['base' => ['name' =>'chirag', 'last_name' => 'Bhalara', 'Tel' => 9537178057]];
+        $array2 = ['base' => ['name' =>'chirag111', 'last_name' => 'Bhalara222', 'email' =>'dd@ff.in']];
+        $json = ArrayHelper::jsonFormate($array, true);
+        $arrayRes = ArrayHelper::jsonFormate($json, false, true);
+        //print_r(ArrayHelper::ArrayToStr($arrayRes['base'], ','));
+        //print_r(ArrayHelper::StrToArray('a,b,c', ','));
+        print_r(ArrayHelper::diffRecursive($array, $array2));
     }
 
 }

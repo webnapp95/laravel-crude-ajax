@@ -22,3 +22,5 @@ Route::post('/movies/createMovies', 'MoviesController@createMovies');
 Route::post('/movies/updateMovies/{id}', 'MoviesController@updateMovies');
 Route::delete('/movies/{id}', 'MoviesController@deleteMovies');
 Route::post('/imageUpload', 'MoviesController@imageUpload');
+
+Route::get('/test', 'MoviesController@test');

@@ -177,6 +177,7 @@ class MoviesController extends Controller
             $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
             // can upload same image using rand function
             $finalImage = rand(1000,1000000).$img;
+            $finalImage = array_first(ArrayHelper::fileSeoName([$finalImage]));
         // check's valid format
             if(in_array($ext, $validExtensions)) 
             { 

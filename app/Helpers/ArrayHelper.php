@@ -88,5 +88,17 @@
             return $results;
         }
 
+    public static function fileSeoName(array $names){
+        $result = [];
+        $names  = array_filter(array_unique($names));
+        if(empty($names)) {
+            return $result;
+        }
+
+        $result = str_replace(['-', '', '_'], '', $names);
+
+            return $result;
+        }
+
     }
 ?>

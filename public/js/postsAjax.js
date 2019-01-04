@@ -7,7 +7,7 @@ manageData();
 
 /* manage data list */
 function manageData() {
-    var base_url = 'http://localhost/movies';
+    var base_url = 'http://localhost/laravel-crude-ajax';
     var page = getUrlParam('page', 1);
     $.ajax({
         dataType: 'json',
@@ -41,7 +41,7 @@ $.ajaxSetup({
 
 /* Get Page Data*/
 function getPageData(page = 1) {
-    var base_url = 'http://localhost/movies';
+    var base_url = 'http://localhost/laravel-crude-ajax';
     //var page = getUrlParam('page', 1);
     $.ajax({
         dataType: 'json',
@@ -97,7 +97,7 @@ $(".crud-submit").click(function(e) {
 /* Remove Post */
 $("body").on("click",".remove-item",function() {
     var id = $(this).parent("td").data('id');
-    var base_url = 'http://localhost/movies/api/movies';
+    var base_url = 'http://localhost/laravel-crude-ajax/api/movies';
     var c_obj = $(this).parents("tr");
     $.ajax({
         dataType: 'json',
@@ -112,7 +112,7 @@ $("body").on("click",".remove-item",function() {
 
 /* Edit Post */
 $("body").on("click",".edit-item",function() {
-    var base_url = 'http://localhost/movies/api/movies/updateMovies';
+    var base_url = 'http://localhost/laravel-crude-ajax/api/movies/updateMovies';
     var id = $(this).parent("td").data('id');
     var title = $(this).parent("td").prev("td").prev("td").text();
     var year = $(this).parent("td").prev("td").prev("td").prev("td").text();
@@ -179,7 +179,7 @@ function readURL(input) {
     reader.onload = function(e) {
 
     }
-    var base_url = 'http://localhost/movies/api/imageUpload';
+    var base_url = 'http://localhost/laravel-crude-ajax/api/imageUpload';
     var fdata = new FormData();
     fdata.append("image", input.files[0]);
     $.ajax({
@@ -190,10 +190,15 @@ function readURL(input) {
         processData: false,
         contentType: false,
     }).done(function(data){
-      $('#blah').attr("src",data.imageName);
-      $("img").attr("src",data.imageName);
-      $('#blah').hide();
-      $('#blah').fadeIn(650);
+        if (data.code == 0) {
+          $('#blah').attr("src",data.data.imageName);
+          $("img").attr("src",data.data.imageName);
+          $('#blah').hide();
+          $('#blah').fadeIn(650);
+          toastr.success('', 'Success', {timeOut: 5000});
+        } else {
+            toastr.error(data.msg, 'Error Alert', {timeOut: 5000});
+        }
     });
     reader.readAsDataURL(input.files[0]);
   }

@@ -161,7 +161,6 @@ function getUrlParam(parameter, defaultvalue){
 
 
 $("#imgInp").change(function() {
-    //console.log("upload");
     readURL(this);
 });
 

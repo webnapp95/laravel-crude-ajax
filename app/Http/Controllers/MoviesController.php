@@ -163,6 +163,9 @@ class MoviesController extends Controller
         $validExtensions = array('jpeg', 'jpg', 'png', 'gif', 'bmp' , 'pdf' , 'doc' , 'ppt'); // valid extensions
         $basePath        = url('public/uploads'); // upload directory
         $path            = public_path('/uploads'); // upload directory
+        if(!is_dir($path)){
+            mkdir($path, 0755, true);
+        }
 
         if($_FILES['image'])
         {

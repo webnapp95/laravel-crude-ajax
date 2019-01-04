@@ -161,7 +161,6 @@ function getUrlParam(parameter, defaultvalue){
 
 
 $("#imgInp").change(function() {
-    //console.log("upload");
     readURL(this);
 });
 
@@ -190,10 +189,15 @@ function readURL(input) {
         processData: false,
         contentType: false,
     }).done(function(data){
-      $('#blah').attr("src",data.imageName);
-      $("img").attr("src",data.imageName);
-      $('#blah').hide();
-      $('#blah').fadeIn(650);
+        if (data.code == 0) {
+          $('#blah').attr("src",data.data.imageName);
+          $("img").attr("src",data.data.imageName);
+          $('#blah').hide();
+          $('#blah').fadeIn(650);
+          toastr.success('', 'Success', {timeOut: 5000});
+        } else {
+            toastr.error(data.msg, 'Error Alert', {timeOut: 5000});
+        }
     });
     reader.readAsDataURL(input.files[0]);
   }

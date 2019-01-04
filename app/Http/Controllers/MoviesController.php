@@ -149,12 +149,25 @@ class MoviesController extends Controller
      * @author Chigs Patel <info@webnappdev.in>
      * @Date 3rd Nov 2018
      */
-    public function imageUpload()
+    public function imageUpload(Request $request)
     {
-        $image = [];
-        $valid_extensions = array('jpeg', 'jpg', 'png', 'gif', 'bmp' , 'pdf' , 'doc' , 'ppt'); // valid extensions
-        $basePath = url('public/uploads'); // upload directory
-        $path = public_path('/uploads'); // upload directory
+        $image           = [];
+        $validExtensions = array('jpeg', 'jpg', 'png', 'gif', 'bmp' , 'pdf' , 'doc' , 'ppt'); // valid extensions
+        $basePath        = url('public/uploads'); // upload directory
+        $path            = public_path('/uploads'); // upload directory
+        if(!is_dir($path)){
+            mkdir($path, 0755, true);
+        }
+        $validator = Validator::make($request->all(), [
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        if ($validator->fails()) {
+            $this->validateMsg = $validator->errors()->all();
+            $image['code'] = -1;
+            $image['msg'] = implode(",", $this->validateMsg);
+            return $image;
+        }
 
         if($_FILES['image'])
         {
@@ -163,14 +176,15 @@ class MoviesController extends Controller
             // get uploaded file's extension
             $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
             // can upload same image using rand function
-            $final_image = rand(1000,1000000).$img;
+            $finalImage = rand(1000,1000000).$img;
         // check's valid format
-            if(in_array($ext, $valid_extensions)) 
+            if(in_array($ext, $validExtensions)) 
             { 
-                $path = $path."/".strtolower($final_image); 
-                if(move_uploaded_file($tmp,$path)) 
+                $path = $path."/".strtolower($finalImage); 
+                if(move_uploaded_file($tmp, $path)) 
                 {
-                    $image['imageName'] = $basePath."/".$final_image;
+                    $image['code'] = 0;
+                    $image['data']['imageName'] = $basePath."/".$finalImage;
                 }
             }
 

@@ -32,7 +32,7 @@
                         <div class="form-group">
                             <label class="control-label col-sm-2" for="content">Description:</label>
                             <div class="col-sm-10">
-                                <textarea class="form-control" id="description" name="description" cols="40" rows="5"></textarea>
+                                <textarea class="form-control" id="description2" name="description" cols="40" rows="5"></textarea>
                                 <p class="errorContent text-center alert alert-danger hidden"></p>
                             </div>
                         </div>

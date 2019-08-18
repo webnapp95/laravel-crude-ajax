@@ -7,6 +7,8 @@ use App\Models\Movies;
 use Validator;
 use App\Helpers\ArrayHelper;
 use App\Helpers\DateHelper;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Question;
 
 class MoviesController extends Controller
 {
@@ -177,6 +179,7 @@ class MoviesController extends Controller
             $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
             // can upload same image using rand function
             $finalImage = rand(1000,1000000).$img;
+            $finalImage = array_first(ArrayHelper::fileSeoName([$finalImage]));
         // check's valid format
             if(in_array($ext, $validExtensions)) 
             { 
@@ -201,5 +204,61 @@ class MoviesController extends Controller
         //print_r(ArrayHelper::StrToArray('a,b,c', ','));
         print_r(ArrayHelper::diffRecursive($array, $array2));
     }
+
+    public function importFile(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'import_file' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            $this->validateMsg = $validator->errors()->all();
+            $image['code'] = -1;
+            $image['msg'] = implode(",", $this->validateMsg);
+            return $image;
+        }
+
+ 
+        $path = $request->file('import_file')->getRealPath();
+        $data = Excel::load($path)->get();
+ 
+        if($data->count()){
+            $data = $data->toArray();
+            foreach ($data as $key => $value) {
+                /*
+                foreach($value as $detail) {
+                    $arr[] = ['title' => $detail['title']];
+                }
+                */
+                for ($i=0;$i<count($value); $i+=5){
+                    $str = substr($value[$i]['title'], strpos($value[$i]['title']," "));
+                    $data = [
+                                'question' => $str,
+                                'op1'   => $value[$i+1]['title'],
+                                'op2'   => $value[$i+2]['title'],
+                                'op3'   => $value[$i+3]['title'],
+                                'op4'   => $value[$i+4]['title'],
+                            ];
+                    if(!empty($data)){
+                        Question::insert($data);
+                    }
+                }
+            }
+        }
+
+        return $this->responseSuccess('Insert Record successfully.'); 
+    }
+
+        public function downloadExcel($type)
+    {
+        //$data = Item::get()->toArray();
+            
+        return Excel::create('itsolutionstuff_example', function($excel) use ($data) {
+            $excel->sheet('mySheet', function($sheet) use ($data)
+            {
+                $sheet->fromArray($data);
+            });
+        })->download($type);
+    }
+
 
 }

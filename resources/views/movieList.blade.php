@@ -40,10 +40,35 @@
     </div>
     <link href="<?=url('/')?>/public/css/toastr.min.css" rel="stylesheet">
     <script type="text/javascript" src="<?=url('/')?>/public/js/jquery.js"></script>
+    <script type="text/javascript" src="<?=url('/')?>/public/js/ckeditor.js"></script> 
     <script type="text/javascript" src="<?=url('/')?>/public/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="<?=url('/')?>/public/js/jquery.twbsPagination.min.js"></script>
     <script src="<?=url('/')?>/public/js/validator.min.js"></script>
     <script type="text/javascript" src="<?=url('/')?>/public/js/toastr.min.js"></script>
     <script src="<?=url('/')?>/public/js/postsAjax.js"></script> 
+    <script>
+    ClassicEditor
+        .create( document.querySelector( '#description' ), {
+            // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
+        } )
+        .then( editor => {
+            window.editor = editor;
+        } )
+        .catch( err => {
+            console.error( err.stack );
+        } );
+    ClassicEditor
+        .create( document.querySelector( '#description2' ), {
+            // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
+        } )
+        .then( editor => {
+            window.editor = editor;
+        } )
+        .catch( err => {
+            console.error( err.stack );
+        } );
+
+</script>
+
 </body>
 </html>

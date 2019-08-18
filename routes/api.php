@@ -23,4 +23,5 @@ Route::post('/movies/updateMovies/{id}', 'MoviesController@updateMovies');
 Route::delete('/movies/{id}', 'MoviesController@deleteMovies');
 Route::post('/imageUpload', 'MoviesController@imageUpload');
 
+Route::post('/importExcel', 'MoviesController@importFile');
 Route::get('/test', 'MoviesController@test');

@@ -36,7 +36,6 @@
         @include('create')
         <!-- Edit Item Modal -->
         @include('edit')
-
     </div>
     <link href="<?=url('/')?>/public/css/toastr.min.css" rel="stylesheet">
     <script type="text/javascript" src="<?=url('/')?>/public/js/jquery.js"></script>

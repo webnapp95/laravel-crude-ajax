@@ -44,7 +44,7 @@
     <script type="text/javascript" src="<?=url('/')?>/public/js/jquery.twbsPagination.min.js"></script>
     <script src="<?=url('/')?>/public/js/validator.min.js"></script>
     <script type="text/javascript" src="<?=url('/')?>/public/js/toastr.min.js"></script>
-    <script src="<?=url('/')?>/public/js/postsAjax.js"></script> 
+    <script src="<?=url('/')?>/public/js/postsAjaxNew.js"></script> 
     <script>
     ClassicEditor
         .create( document.querySelector( '#description' ), {
@@ -66,6 +66,8 @@
         .catch( err => {
             console.error( err.stack );
         } );
+
+    manageData();
 
 </script>
 
